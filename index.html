@@ -700,12 +700,16 @@ body.is-dragging,body.is-dragging *{cursor:grabbing!important;user-select:none!i
   --ff-title:'Quicksand',system-ui,sans-serif;--ff:'Nunito',system-ui,sans-serif;
   --pattern:linear-gradient(135deg,rgba(124,203,176,.10) 25%,transparent 25%,transparent 50%,rgba(124,203,176,.10) 50%,rgba(124,203,176,.10) 75%,transparent 75%);--pattern-size:28px 28px}
 [data-theme=menta] h1,[data-theme=menta] h2,[data-theme=menta] h3{font-weight:700}
-/* 3) Elegante */
-[data-theme=elegante]{--rose:#8E3B5A;--rose-2:#B86E8B;--nude:#EFDCE2;--gold:#C9A96E;--bg:#FAF6F4;--beige:#ECE2DE;--text:#5A4750;--card:#FFFFFF;--surface:#FCF9F8;--line:#EADFDD;--muted:#9C8890;--heading:#3B2730;--rose-soft:#F5E6EB;--gold-soft:#F6EEE0;--gold-text:#8F7440;--radius:10px;--radius-sm:8px;
-  --ff-title:'Playfair Display',Georgia,serif;--ff:'Lato',system-ui,sans-serif;
-  --pattern:linear-gradient(90deg,rgba(201,169,110,.08) 1px,transparent 1px);--pattern-size:60px 60px}
-[data-theme=elegante] .page-h .eyebrow,[data-theme=elegante] .hero .eyebrow{letter-spacing:.4em}
-[data-theme=elegante] .card{box-shadow:0 1px 0 rgba(201,169,110,.35),0 10px 30px rgba(59,39,48,.06)}
+/* 3) Vibrante */
+[data-theme=vibrante]{--rose:#E6007E;--rose-2:#FF4FA3;--nude:#FFD3E8;--gold:#FF8A00;--bg:#FFF2F8;--beige:#FFDDEC;--text:#5B2E45;--card:#FFFFFF;--surface:#FFF7FB;--line:#FFD0E4;--muted:#A9708D;--heading:#4A0A30;--rose-soft:#FFE0EF;--gold-soft:#FFEBD6;--gold-text:#C25E00;--radius:16px;
+  --ff-title:'Montserrat',system-ui,sans-serif;--ff:'Nunito',system-ui,sans-serif;
+  --pattern:radial-gradient(700px 450px at 0% 0%,rgba(230,0,126,.16),transparent 60%),radial-gradient(600px 450px at 100% 100%,rgba(255,138,0,.14),transparent 60%);--pattern-size:100% 100%;
+  --shadow:0 2px 4px rgba(230,0,126,.06),0 10px 26px rgba(230,0,126,.10)}
+[data-theme=vibrante] h1,[data-theme=vibrante] h2,[data-theme=vibrante] h3,[data-theme=vibrante] h4{font-weight:800;letter-spacing:-.3px}
+[data-theme=vibrante] .btn-primary{background:linear-gradient(135deg,#E6007E,#FF4FA3);box-shadow:0 6px 18px rgba(230,0,126,.35)}
+[data-theme=vibrante] .hero{background:linear-gradient(120deg,#FFE0EF,#FFF0E0 55%,#FFD6EA)}
+[data-theme=vibrante] .sb-item.active{background:linear-gradient(90deg,#FFE0EF,#FFF2F8)}
+[data-theme=vibrante] .prog>i{background:linear-gradient(90deg,#FF4FA3,#E6007E)}
 /* 4) Despojado */
 [data-theme=despojado]{--rose:#E2607F;--rose-2:#F3A0B2;--nude:#FBE2E2;--gold:#F2A65A;--bg:#FFF8F1;--beige:#F6E6DA;--text:#5E4E4A;--card:#FFFDFB;--surface:#FFF9F4;--line:#F0DED3;--muted:#A38F88;--heading:#4A3631;--rose-soft:#FDE8EA;--gold-soft:#FFEEDC;--gold-text:#B86B22;--radius:14px;
   --ff-title:'Caveat',cursive;--ff:'Nunito',system-ui,sans-serif;
@@ -3131,7 +3135,7 @@ const THEMES=[
   {id:'dark',n:'Rose Gold escuro',d:'Versão noturna do original',c:['#1D1817','#C27B85','#B07A80','#D4AF75'],f:'Cormorant Garamond',fonts:''},
   {id:'kawaii',n:'Kawaii',d:'Fofo, bolinhas e cantos redondos',c:['#FFF4F8','#F0679B','#FF9EC4','#FFC76E'],f:'Baloo 2',fonts:'Baloo+2:wght@500;600;700&family=Quicksand:wght@400;500;600;700'},
   {id:'menta',n:'Hortelã & rosa pastel',d:'Verde menta com rosa suave',c:['#F2FAF7','#E07A9D','#7CCBB0','#F2AFC4'],f:'Quicksand',fonts:'Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700'},
-  {id:'elegante',n:'Elegante',d:'Rosa vinho e champanhe',c:['#FAF6F4','#8E3B5A','#B86E8B','#C9A96E'],f:'Playfair Display',fonts:'Playfair+Display:wght@500;600;700&family=Lato:wght@400;700'},
+  {id:'vibrante',n:'Rosa Vibrante',d:'Pink intenso, magenta e laranja',c:['#FFF2F8','#E6007E','#FF4FA3','#FF8A00'],f:'Montserrat',fonts:'Montserrat:wght@600;700;800&family=Nunito:wght@400;600;700'},
   {id:'despojado',n:'Despojado',d:'Caderno pautado e letra à mão',c:['#FFF8F1','#E2607F','#F3A0B2','#F2A65A'],f:'Caveat',fonts:'Caveat:wght@500;600;700&family=Nunito:wght@400;600;700'},
   {id:'moderno',n:'Moderno',d:'Limpo, plano e rosa vibrante',c:['#F6F6F9','#E23C7B','#FF8BB2','#1F1F2E'],f:'Poppins',fonts:'Poppins:wght@500;600;700'},
   {id:'criativo',n:'Criativo',d:'Degradês rosa e pêssego',c:['#FFF6F7','#D6336C','#FF8FAB','#FFAE6B'],f:'Fredoka',fonts:'Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700'},
@@ -3141,6 +3145,7 @@ const THEMES=[
   {id:'atual',n:'Atual',d:'Vidro fosco e degradê rosa-lilás',c:['#FDF0F5','#E8558A','#B794F6','#FFD6E7'],f:'Manrope',fonts:'Manrope:wght@400;500;600;700;800'}
 ];
 function applyTheme(){
+  if(S.settings.theme==='elegante')S.settings.theme='vibrante';
   const t=THEMES.find(x=>x.id===S.settings.theme)||THEMES[0];
   document.documentElement.dataset.theme=t.id;
   if(t.fonts&&!document.getElementById('font-'+t.id)){const l=document.createElement('link');l.id='font-'+t.id;l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family='+t.fonts+'&display=swap';document.head.appendChild(l);}
