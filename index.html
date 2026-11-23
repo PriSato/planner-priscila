@@ -414,6 +414,22 @@ input[type=checkbox],input[type=radio]{accent-color:var(--rose)}
 .hist-day{font-family:var(--ff-title);font-size:18px;color:var(--heading);margin:14px 0 6px;font-weight:600}
 .hist-day:first-child{margin-top:0}
 
+.tk-row{flex-wrap:wrap}
+.tk-sub{flex-basis:100%;padding:2px 0 4px 36px;display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0 18px}
+.tk-sub-h{grid-column:1/-1;font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-text);font-weight:600;margin-top:6px}
+.ck{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0;color:var(--text);min-width:0}
+.ck span{flex:1;min-width:0}
+.ck .tick{width:20px;height:20px}
+.ck.done span{text-decoration:line-through;color:var(--muted)}
+.sub-tog{border:1px solid var(--line);background:var(--surface);border-radius:999px;font-size:12px;padding:3px 10px;display:inline-flex;gap:5px;align-items:center;cursor:pointer;color:var(--muted);flex:none;font-variant-numeric:tabular-nums}
+.sub-tog:hover{border-color:var(--rose-2);color:var(--rose)}
+.sub-tog.full{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,var(--line))}
+.view.sl-next{animation:slnext .3s ease}.view.sl-prev{animation:slprev .3s ease}
+@keyframes slnext{from{opacity:.35;transform:translateX(46px)}to{opacity:1;transform:none}}
+@keyframes slprev{from{opacity:.35;transform:translateX(-46px)}to{opacity:1;transform:none}}
+.view-agenda .cal-card,.view-mes .mini-cal,.view-ciclo .cy,.view-tarefas .cal-card{user-select:none;-webkit-user-select:none}
+@media (max-width:640px){.tk-sub{padding-left:8px}}
+
 /* ---------- Planejamento semanal / mensal ---------- */
 .wk-board{display:grid;grid-template-columns:repeat(7,minmax(170px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
 .wk-day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:260px;transition:background .15s,box-shadow .15s;min-width:0}
@@ -1700,7 +1716,7 @@ function render(){
   const keep={};$$('[data-keep-scroll]',v).forEach(el=>{if(el.id)keep[el.id]=[el.scrollTop,el.scrollLeft];});
   const fn=VIEWS[U.route]||VIEWS.dashboard;
   try{v.innerHTML=fn();}catch(e){console.error(e);v.innerHTML=`<div class="card empty">${ic('alert',28)}<b>Não foi possível exibir esta tela</b>${esc(e.message)}</div>`;}
-  v.className='view view-'+U.route;
+  v.className='view view-'+U.route+(U.slide?(U.slide>0?' sl-next':' sl-prev'):'');U.slide=0;
   for(const [id,[t,l]] of Object.entries(keep)){const el=document.getElementById(id);if(el){el.scrollTop=t;el.scrollLeft=l;}}
   AFTER[U.route]&&AFTER[U.route]();
   if(focus){const el=document.getElementById(focus.id);if(el){el.focus();try{el.setSelectionRange(focus.s,focus.e);}catch(e){}}}
@@ -1954,7 +1970,7 @@ VIEWS.agenda=()=>{
     <select data-ch="agCat" aria-label="Filtrar por categoria"><option value="">Todas as categorias</option>${opts(S.categories.map(c=>[c.id,c.name]),U.ag.cat)}</select>
     <div class="grow"></div><div class="legend">${catLegend()}</div></div>
   <div class="card cal-card">${body}</div>
-  ${v!=='ano'?`<p class="hint" style="margin-top:10px">${ic('sparkle',13)} Dica: ${v==='mes'?'clique em um dia para ver ou cadastrar atividades; arraste um compromisso para outro dia para reagendá-lo.':'clique em um horário vazio para criar um compromisso; arraste compromissos para outros horários ou dias (no tablet, toque e segure para arrastar).'}</p>`:''}`;
+  ${v!=='ano'?`<p class="hint" style="margin-top:10px">${ic('sparkle',13)} Dica: ${v==='mes'?'deslize para o lado para trocar de mês; clique em um dia para ver ou cadastrar atividades; arraste um compromisso para outro dia para reagendá-lo.':'deslize para o lado para avançar ou voltar; clique em um horário vazio para criar um compromisso; arraste compromissos para outros horários ou dias (no tablet, toque e segure para arrastar).'}</p>`:''}`;
 };
 AFTER.agenda=()=>{
   const sc=$('#tgScroll');
@@ -2172,14 +2188,29 @@ function taskRow(t,o={}){
     <button class="tk-main" data-a="openRef" data-type="task" data-id="${t.id}"><b>${esc(t.title)}</b><span class="meta">
       ${t.due?`<span class="${late?'late-t':''}">${ic('clock',12)}${relDay(t.due)}${t.dueTime?' '+t.dueTime:''}</span>`:''}
       ${o.done&&t.completedAt?`<span>${ic('check',12)}Concluída ${fmtStamp(t.completedAt)}</span>`:''}
-      ${p?`<span>${ic('briefcase',12)}${esc(p.name)}</span>`:''}${st?`<span>${ic('tasks',12)}${st}</span>`:''}
+      ${p?`<span>${ic('briefcase',12)}${esc(p.name)}</span>`:''}
       ${t.assignee?`<span>${ic('user',12)}${esc(t.assignee)}</span>`:''}${(t.attachments||[]).length?`<span>${ic('clip',12)}${t.attachments.length}</span>`:''}
       ${(t.links||[]).length?`<span>${ic('link',12)}${t.links.length}</span>`:''}${late?'<span class="badge-late">Atrasada</span>':''}</span></button>
+    ${st?`<button class="sub-tog ${subAllDone(t)?'full':''}" data-a="tkSub" data-id="${t.id}" aria-expanded="${subOpen(t)}" title="${subOpen(t)?'Ocultar checklist':'Mostrar checklist'}">${ic('tasks',13)}${st}<span style="display:inline-block;transform:rotate(${subOpen(t)?180:0}deg)">${ic('chevD',12)}</span></button>`:''}
     <div class="tk-side">${t.categoryId?catChip(t.categoryId,t.categoryOther):''}${priPill(t.priority)}
       <select class="st-sel st-${t.status}" data-ch="taskStatus" data-id="${t.id}" aria-label="Status">${opts(Object.entries(TST),t.status)}</select>
       <button class="btn-icon sm" data-a="taskDup" data-id="${t.id}" title="Duplicar" aria-label="Duplicar">${ic('copy',15)}</button>
-      <button class="btn-icon sm danger" data-a="taskDel" data-id="${t.id}" title="Excluir" aria-label="Excluir">${ic('trash',15)}</button></div></div>`;
+      <button class="btn-icon sm danger" data-a="taskDel" data-id="${t.id}" title="Excluir" aria-label="Excluir">${ic('trash',15)}</button></div>${st&&subOpen(t)?subList(t):''}</div>`;
 }
+const subItems=t=>[...(t.subtasks||[]),...(t.checklist||[])];
+const subAllDone=t=>{const L=subItems(t);return L.length>0&&L.every(x=>x.done);};
+const subOpen=t=>(U.tk.exp&&(t.id in U.tk.exp))?U.tk.exp[t.id]:isOpen(t);
+function subList(t){
+  const both=(t.subtasks||[]).length&&(t.checklist||[]).length;
+  const grp=(k,label)=>(t[k]||[]).length?(both?`<div class="tk-sub-h">${label}</div>`:'')+t[k].map(s=>`<div class="ck ${s.done?'done':''}"><button class="tick sq ${s.done?'on':''}" data-a="subToggle" data-t="${t.id}" data-k="${k}" data-id="${s.id}" aria-label="${s.done?'Desmarcar':'Marcar'}: ${esc(s.title)}">${ic('check',11)}</button><span>${esc(s.title)}</span>${s.due?`<small class="${!s.done&&s.due<today()?'late-t':'muted'}">${fmtDS(s.due)}</small>`:''}</div>`).join(''):'';
+  return `<div class="tk-sub">${grp('subtasks','Subtarefas')}${grp('checklist','Checklist')}</div>`;
+}
+A.tkSub=el=>{const t=byId(S.tasks,el.dataset.id);if(!t)return;U.tk.exp=U.tk.exp||{};U.tk.exp[t.id]=!subOpen(t);render();};
+A.subToggle=el=>{
+  const t=byId(S.tasks,el.dataset.t);const s=t&&(t[el.dataset.k]||[]).find(x=>x.id===el.dataset.id);if(!s)return;
+  const willDone=!s.done;const complete=willDone&&subItems(t).filter(x=>x.done).length+1===subItems(t).length;
+  commit(()=>{s.done=willDone;s.doneAt=willDone?stamp():'';},{msg:!willDone?'Item desmarcado':(complete&&isOpen(t)?'Checklist completo! Você já pode concluir a tarefa.':'Item concluído')});
+};
 const taskListHTML=(L,o)=>L.length?`<div class="tk-list">${L.map(t=>taskRow(t,o)).join('')}</div>`:'';
 function groupHTML(groups,o){
   const g=groups.filter(x=>x.items.length);
@@ -3294,7 +3325,28 @@ async function onDrop(src,dst,info){
 /* =====================================================================
    EVENTOS GLOBAIS E INICIALIZAÇÃO
    ===================================================================== */
+const SWIPE={agenda:'agNav',semana:'wkNav',mes:'moNav',ciclo:'cyYear',financas:'finNav',relatorios:'rpNav'};
+const swipeAction=()=>U.route==='tarefas'?(U.tk.view==='calendario'?'tkMonth':null):(SWIPE[U.route]||null);
+function canScrollX(el,n,root){for(let e=el;e&&e!==root;e=e.parentElement){const cs=getComputedStyle(e);if(/(auto|scroll)/.test(cs.overflowX)&&e.scrollWidth>e.clientWidth+2){if(n>0?e.scrollLeft+e.clientWidth<e.scrollWidth-2:e.scrollLeft>2)return true;}}return false;}
+let SW=null;
+function swStart(x,y,t){SW=null;if(Modal.stack.length||!swipeAction()||!t||!t.closest)return;if(!t.closest('#view')||t.closest('input,textarea,select,[data-drag],.no-swipe'))return;SW={x,y,t:Date.now(),el:t};}
+function swEnd(x,y){
+  const s=SW;SW=null;if(!s||(Drag.s&&Drag.s.started)||Drag.justDropped)return;
+  const dx=x-s.x,dy=y-s.y;if(Math.abs(dx)<70||Math.abs(dx)<Math.abs(dy)*1.6||Date.now()-s.t>900)return;
+  const n=dx<0?1:-1;if(canScrollX(s.el,n,$('#view')))return;
+  const a=swipeAction();if(!a||!A[a])return;
+  Drag.justDropped=true;setTimeout(()=>{Drag.justDropped=false;},80);
+  U.slide=n;A[a]({dataset:{n:String(n)}});
+}
+function bindSwipe(){
+  document.addEventListener('touchstart',e=>{if(e.touches.length===1)swStart(e.touches[0].clientX,e.touches[0].clientY,e.target);else SW=null;},{passive:true});
+  document.addEventListener('touchend',e=>{const t=e.changedTouches[0];if(t&&SW)swEnd(t.clientX,t.clientY);},{passive:true});
+  document.addEventListener('touchcancel',()=>{SW=null;});
+  document.addEventListener('mousedown',e=>{if(e.button===0)swStart(e.clientX,e.clientY,e.target);});
+  document.addEventListener('mouseup',e=>{if(SW)swEnd(e.clientX,e.clientY);});
+}
 function bindGlobal(){
+  bindSwipe();
   document.addEventListener('click',e=>{
     const el=e.target.closest('[data-a]');
     if(Pop.open&&!e.target.closest('.pop')&&!(el&&['quickMenu','notifToggle'].includes(el.dataset.a))&&!e.target.closest('.tb-search'))Pop.close();
