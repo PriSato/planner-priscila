@@ -1576,8 +1576,8 @@ function openRef(type,id){
 A.openRef=el=>openRef(el.dataset.type,el.dataset.id);
 
 /* ---------- Sincronização na nuvem (Supabase) ---------- */
-const SUPABASE_URL='https://ztbrkxeulrdzdsreldrc.supabase.co';
-const SUPABASE_KEY='sb_publishable_f3Wx5oJPSD8N0kWs11IVig_sFKJtwYo';
+const SUPABASE_URL='https://sxoubhtyeusogsvxxkou.supabase.co';
+const SUPABASE_KEY='sb_publishable_PLkKsiZy5y-oHXKMlSnLLg_9lmmtXpX';
 const SYNC_TABLE='planner_store';
 const Sync={
   sb:null,user:null,state:'off',timer:null,lastError:'',busy:false,lastSync:0,
@@ -3227,7 +3227,7 @@ VIEWS.config=()=>{
       <section class="card"><div class="card-h"><h3>${ic('cloud',18)}Sincronização entre dispositivos</h3></div>
         <div class="sync-box"><div id="syncStatus">${syncStatusHTML()}</div>
         ${Sync.user?`<p class="small" style="margin-top:6px">Conta conectada: <b>${esc(Sync.user.email||'')}</b></p><div class="row" style="margin-top:10px"><button class="btn btn-primary btn-sm" data-a="syncNow">${ic('repeat',14)}Sincronizar agora</button><button class="btn btn-ghost btn-sm" data-a="syncLogout">${ic('logout',14)}Sair</button></div>`
-        :Sync.state==='unavailable'?'':`<form id="syncForm" class="form" style="margin-top:10px;gap:10px" autocomplete="on" onsubmit="return false"><div class="grid2"><label class="fld"><span>E-mail</span><input type="email" name="email" autocomplete="username" required></label><label class="fld"><span>Senha</span><input type="password" name="password" autocomplete="current-password" required></label></div><div class="row"><button class="btn btn-primary btn-sm" data-a="syncLogin">${ic('cloud',14)}Entrar e sincronizar</button><small class="hint">Use a mesma conta do Supabase dos seus outros apps.</small></div></form>`}</div></section>
+        :Sync.state==='unavailable'?'':`<form id="syncForm" class="form" style="margin-top:10px;gap:10px" autocomplete="on" onsubmit="return false"><div class="grid2"><label class="fld"><span>E-mail</span><input type="email" name="email" autocomplete="username" required></label><label class="fld"><span>Senha</span><input type="password" name="password" autocomplete="current-password" required></label></div><div class="row"><button class="btn btn-primary btn-sm" data-a="syncLogin">${ic('cloud',14)}Entrar e sincronizar</button><small class="hint">Use a conta criada no projeto “Planner PriSato” do Supabase.</small></div></form>`}</div></section>
       <section class="card"><div class="card-h"><h3>${ic('database',18)}Dados e backup</h3></div>
         <p class="small muted" style="margin-bottom:10px">Salvamento automático neste navegador (IndexedDB). ${plural(S.events.length,'compromisso')} · ${plural(S.tasks.length,'tarefa')} · ${plural(S.projects.length,'projeto')} · ${plural(S.goals.length,'meta')} · ${plural(S.notes.length,'anotação','anotações')} · ${plural(S.lists.length,'lista')}.</p>
         <div class="row"><button class="btn btn-ghost btn-sm" data-a="backupExport">${ic('download',14)}Exportar backup (.json)</button><label class="btn btn-ghost btn-sm file-btn">${ic('upload',14)}Restaurar backup<input type="file" accept=".json,application/json" data-ch="backupImport"></label><button class="btn btn-danger-ghost btn-sm" data-a="wipeAll">${ic('trash',14)}Apagar todos os dados</button></div></section>

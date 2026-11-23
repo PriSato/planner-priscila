@@ -1,7 +1,7 @@
 -- ============================================================
 -- Planner Digital — sincronização na nuvem (Supabase)
--- Reaproveita o MESMO projeto Supabase dos outros apps, em uma
--- tabela própria (planner_store), isolada das auditorias.
+-- Projeto Supabase PRÓPRIO do planner ("Planner PriSato"),
+-- separado do projeto das auditorias.
 --
 -- Cada usuário autenticado tem UMA linha com todo o seu planner
 -- (compromissos, tarefas, projetos, metas, anotações, listas,
@@ -19,6 +19,9 @@ create table if not exists public.planner_store (
 );
 
 alter table public.planner_store enable row level security;
+
+grant select, insert, update, delete on public.planner_store to authenticated;
+revoke all on public.planner_store from anon;
 
 drop policy if exists "planner_select_own" on public.planner_store;
 create policy "planner_select_own" on public.planner_store
