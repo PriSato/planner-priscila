@@ -25,6 +25,7 @@
   --ff-title:'Cormorant Garamond', Georgia, 'Times New Roman', serif;
   --ff:'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --sb-w:252px; --hh:48px;
+  --pattern:radial-gradient(color-mix(in srgb,var(--rose) 10%,transparent) 1px,transparent 1.3px);--pattern-size:24px 24px;--pattern-pos:0 0;
   color-scheme:light;
 }
 [data-theme=dark]{
@@ -37,7 +38,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-variant-numeric:lining-nums;font-family:var(--ff);font-size:14.5px;line-height:1.5;color:var(--text);background-color:var(--bg);
-  background-image:radial-gradient(color-mix(in srgb,var(--rose) 10%,transparent) 1px,transparent 1.3px);background-size:24px 24px;
+  background-image:var(--pattern);background-size:var(--pattern-size);background-position:var(--pattern-pos);
   -webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
 h1,h2,h3,h4{font-variant-numeric:lining-nums;font-family:var(--ff-title);color:var(--heading);font-weight:600;margin:0;letter-spacing:.2px}
 h1{font-size:36px;line-height:1.08} h2{font-size:26px} h3{font-size:21px;line-height:1.2} h4{font-size:17px}
@@ -682,6 +683,96 @@ body.is-dragging,body.is-dragging *{cursor:grabbing!important;user-select:none!i
 #boot{position:fixed;inset:0;display:grid;place-items:center;background:var(--bg);z-index:500}
 #boot .mono{width:64px;height:64px;font-size:26px;animation:pulse 1.4s ease infinite}
 @keyframes pulse{50%{transform:scale(1.06);opacity:.8}}
+
+
+/* =====================================================================
+   TEMAS EXTRAS (todos em tons de rosa)
+   ===================================================================== */
+/* 1) Kawaii */
+[data-theme=kawaii]{--rose:#F0679B;--rose-2:#FF9EC4;--nude:#FFE0EC;--gold:#FFC76E;--bg:#FFF4F8;--beige:#FFE3EE;--text:#7A5566;--card:#FFFFFF;--surface:#FFF8FB;--line:#FBD9E6;--muted:#B58A9C;--heading:#6B3A52;--rose-soft:#FFE6F0;--gold-soft:#FFF3DC;--gold-text:#C98A1E;--radius:26px;--radius-sm:16px;
+  --ff-title:'Baloo 2','Quicksand',system-ui,sans-serif;--ff:'Quicksand',system-ui,sans-serif;
+  --pattern:radial-gradient(circle,#FFD3E3 2.2px,transparent 2.6px),radial-gradient(circle,#FFE9B8 1.6px,transparent 2px);--pattern-size:34px 34px,34px 34px;--pattern-pos:0 0,17px 17px}
+[data-theme=kawaii] h1,[data-theme=kawaii] h2,[data-theme=kawaii] h3{font-weight:700;letter-spacing:0}
+[data-theme=kawaii] .btn,[data-theme=kawaii] .kpi,[data-theme=kawaii] .card{border-width:2px}
+[data-theme=kawaii] .btn-primary{box-shadow:0 4px 0 #D24F82}
+/* 2) Hortelã & rosa pastel */
+[data-theme=menta]{--rose:#E07A9D;--rose-2:#F2AFC4;--nude:#FCE3EB;--gold:#7CCBB0;--bg:#F2FAF7;--beige:#DDF1EA;--text:#5C6B66;--card:#FFFFFF;--surface:#F7FCFA;--line:#D7EEE6;--muted:#8FA59D;--heading:#3F5450;--rose-soft:#FCE8EF;--gold-soft:#E0F4EC;--gold-text:#3E8A72;--radius:20px;
+  --ff-title:'Quicksand',system-ui,sans-serif;--ff:'Nunito',system-ui,sans-serif;
+  --pattern:linear-gradient(135deg,rgba(124,203,176,.10) 25%,transparent 25%,transparent 50%,rgba(124,203,176,.10) 50%,rgba(124,203,176,.10) 75%,transparent 75%);--pattern-size:28px 28px}
+[data-theme=menta] h1,[data-theme=menta] h2,[data-theme=menta] h3{font-weight:700}
+/* 3) Elegante */
+[data-theme=elegante]{--rose:#8E3B5A;--rose-2:#B86E8B;--nude:#EFDCE2;--gold:#C9A96E;--bg:#FAF6F4;--beige:#ECE2DE;--text:#5A4750;--card:#FFFFFF;--surface:#FCF9F8;--line:#EADFDD;--muted:#9C8890;--heading:#3B2730;--rose-soft:#F5E6EB;--gold-soft:#F6EEE0;--gold-text:#8F7440;--radius:10px;--radius-sm:8px;
+  --ff-title:'Playfair Display',Georgia,serif;--ff:'Lato',system-ui,sans-serif;
+  --pattern:linear-gradient(90deg,rgba(201,169,110,.08) 1px,transparent 1px);--pattern-size:60px 60px}
+[data-theme=elegante] .page-h .eyebrow,[data-theme=elegante] .hero .eyebrow{letter-spacing:.4em}
+[data-theme=elegante] .card{box-shadow:0 1px 0 rgba(201,169,110,.35),0 10px 30px rgba(59,39,48,.06)}
+/* 4) Despojado */
+[data-theme=despojado]{--rose:#E2607F;--rose-2:#F3A0B2;--nude:#FBE2E2;--gold:#F2A65A;--bg:#FFF8F1;--beige:#F6E6DA;--text:#5E4E4A;--card:#FFFDFB;--surface:#FFF9F4;--line:#F0DED3;--muted:#A38F88;--heading:#4A3631;--rose-soft:#FDE8EA;--gold-soft:#FFEEDC;--gold-text:#B86B22;--radius:14px;
+  --ff-title:'Caveat',cursive;--ff:'Nunito',system-ui,sans-serif;
+  --pattern:linear-gradient(transparent 27px,rgba(226,96,127,.10) 28px);--pattern-size:100% 28px}
+[data-theme=despojado] h1{font-size:46px} [data-theme=despojado] h2{font-size:32px} [data-theme=despojado] h3{font-size:27px} [data-theme=despojado] h4{font-size:22px}
+[data-theme=despojado] .card,[data-theme=despojado] .kpi{border-style:dashed}
+[data-theme=despojado] .ring-val,[data-theme=despojado] .gl-pct,[data-theme=despojado] .cmp-it b,[data-theme=despojado] .fn-date b,[data-theme=despojado] .wk-day-h b,[data-theme=despojado] .dl .d b,[data-theme=despojado] .kpi b,[data-theme=despojado] .mg-d b,[data-theme=despojado] .tg-dh b{font-family:'Nunito',sans-serif;font-weight:700}
+/* 5) Moderno */
+[data-theme=moderno]{--rose:#E23C7B;--rose-2:#FF8BB2;--nude:#FFE1EC;--gold:#F59AB8;--bg:#F6F6F9;--beige:#ECECF2;--text:#4B4B5C;--card:#FFFFFF;--surface:#FAFAFC;--line:#E8E8EF;--muted:#8E8EA0;--heading:#1F1F2E;--rose-soft:#FDE7EF;--gold-soft:#FDEBF1;--gold-text:#C2346B;--radius:12px;--radius-sm:8px;
+  --ff-title:'Poppins',system-ui,sans-serif;--ff:'Inter',system-ui,sans-serif;--pattern:none;
+  --shadow:0 1px 2px rgba(31,31,46,.04),0 4px 14px rgba(31,31,46,.05)}
+[data-theme=moderno] h1,[data-theme=moderno] h2,[data-theme=moderno] h3,[data-theme=moderno] h4{font-weight:600;letter-spacing:-.4px}
+[data-theme=moderno] h1{font-size:32px}
+[data-theme=moderno] .sb-item.active:before{background:var(--rose)}
+[data-theme=moderno] .hero:before,[data-theme=moderno] .hero:after{display:none}
+/* 6) Criativo */
+[data-theme=criativo]{--rose:#D6336C;--rose-2:#FF8FAB;--nude:#FFE0E6;--gold:#FFAE6B;--bg:#FFF6F7;--beige:#FFE6E2;--text:#5E4552;--card:#FFFFFF;--surface:#FFFAFA;--line:#FADADF;--muted:#A88796;--heading:#4A1F35;--rose-soft:#FFE4EC;--gold-soft:#FFEEDD;--gold-text:#C86A1F;--radius:22px;
+  --ff-title:'Fredoka',system-ui,sans-serif;--ff:'Nunito',system-ui,sans-serif;
+  --pattern:radial-gradient(600px 400px at 0% 0%,rgba(255,143,171,.22),transparent 60%),radial-gradient(500px 400px at 100% 100%,rgba(255,174,107,.18),transparent 60%),radial-gradient(400px 300px at 80% 10%,rgba(214,51,108,.10),transparent 60%);--pattern-size:100% 100%;--pattern-attach:fixed}
+[data-theme=criativo] h1,[data-theme=criativo] h2,[data-theme=criativo] h3{font-weight:600}
+[data-theme=criativo] .btn-primary{background:linear-gradient(135deg,#D6336C,#FF8FAB)}
+[data-theme=criativo] .hero{background:linear-gradient(120deg,#FFE4EC,#FFF1E3 60%,#FFE0EA)}
+[data-theme=criativo] .card:nth-child(3n+1){border-top:3px solid var(--rose-2)} [data-theme=criativo] .card:nth-child(3n+2){border-top:3px solid var(--gold)}
+/* 7) Menininha */
+[data-theme=menininha]{--rose:#EC5F92;--rose-2:#F7A9C6;--nude:#FFE4EF;--gold:#F7B6D0;--bg:#FFF1F6;--beige:#FFE1EC;--text:#7B5468;--card:#FFFFFF;--surface:#FFF7FA;--line:#FCD7E5;--muted:#B88DA2;--heading:#8C2F5A;--rose-soft:#FFE5F0;--gold-soft:#FFEAF3;--gold-text:#C4457A;--radius:24px;--radius-sm:16px;
+  --ff-title:'Dancing Script',cursive;--ff:'Quicksand',system-ui,sans-serif;
+  --pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' viewBox='0 0 24 24'%3E%3Cpath d='M12 20s-7-4.4-7-9.2A3.8 3.8 0 0 1 12 8.5a3.8 3.8 0 0 1 7 2.3C19 15.6 12 20 12 20z' fill='%23F9CFE0' transform='translate(6 6) scale(.42)'/%3E%3C/svg%3E");--pattern-size:44px 44px}
+[data-theme=menininha] h1{font-size:46px} [data-theme=menininha] h2{font-size:32px} [data-theme=menininha] h3{font-size:26px}
+[data-theme=menininha] .kpi b,[data-theme=menininha] .mg-d b,[data-theme=menininha] .tg-dh b,[data-theme=menininha] .gl-pct,[data-theme=menininha] .cmp-it b,[data-theme=menininha] .ring-val,[data-theme=menininha] .fn-date b,[data-theme=menininha] .wk-day-h b,[data-theme=menininha] .dl .d b{font-family:'Quicksand',sans-serif;font-weight:700}
+/* 8) Vintage */
+[data-theme=vintage]{--rose:#A8606E;--rose-2:#CB959C;--nude:#EED8D2;--gold:#B39064;--bg:#F4ECE2;--beige:#E7DACB;--text:#5B4A42;--card:#FCF8F2;--surface:#F8F1E8;--line:#E3D4C3;--muted:#9A8577;--heading:#4A3229;--rose-soft:#F1E0DB;--gold-soft:#EFE4D3;--gold-text:#7D6034;--radius:6px;--radius-sm:4px;
+  --ff-title:'Libre Baskerville',Georgia,serif;--ff:'Lora',Georgia,serif;
+  --pattern:repeating-linear-gradient(45deg,rgba(168,96,110,.05) 0 2px,transparent 2px 9px);--pattern-size:auto}
+[data-theme=vintage] h1{font-size:32px;font-style:italic} [data-theme=vintage] h3{font-size:19px}
+[data-theme=vintage] .card,[data-theme=vintage] .kpi{box-shadow:0 0 0 4px var(--card),0 0 0 5px var(--line),0 6px 16px rgba(74,50,41,.08)}
+[data-theme=vintage] .btn{border-radius:4px}
+/* 9) Me surpreenda — Noite Rosa Neon */
+[data-theme=surpresa]{--rose:#FF5FA2;--rose-2:#C64F8B;--nude:#4A2340;--gold:#FFB86B;--bg:#1C0F1C;--beige:#3A1D35;--text:#F1D9E6;--card:#2A1528;--surface:#241223;--line:#4A2744;--muted:#BB8FA8;--heading:#FFE6F2;--rose-soft:#46193C;--gold-soft:#3F2A22;--gold-text:#FFC98F;--radius:18px;
+  --ff-title:'Comfortaa',system-ui,sans-serif;--ff:'Nunito',system-ui,sans-serif;
+  --pattern:radial-gradient(800px 500px at 10% -10%,rgba(255,95,162,.25),transparent 60%),radial-gradient(700px 500px at 110% 110%,rgba(255,184,107,.15),transparent 60%);--pattern-size:100% 100%;--pattern-attach:fixed;
+  --shadow:0 0 0 1px rgba(255,95,162,.08),0 10px 30px rgba(0,0,0,.35);color-scheme:dark}
+[data-theme=surpresa] h1,[data-theme=surpresa] h2{text-shadow:0 0 18px rgba(255,95,162,.45)}
+[data-theme=surpresa] .btn-primary{box-shadow:0 0 18px rgba(255,95,162,.55)}
+[data-theme=surpresa] .tg-dh.today b,[data-theme=surpresa] .mg-cell.today .mg-d b{box-shadow:0 0 12px rgba(255,95,162,.8)}
+/* 10) Atual — vidro rosado */
+[data-theme=atual]{--rose:#E8558A;--rose-2:#F59BBB;--nude:#FADCE8;--gold:#B794F6;--bg:#FDF0F5;--beige:#F5E1EA;--text:#5A4653;--card:rgba(255,255,255,.72);--surface:rgba(255,255,255,.55);--line:rgba(232,85,138,.14);--muted:#9C8592;--heading:#3A2533;--rose-soft:rgba(232,85,138,.10);--gold-soft:rgba(183,148,246,.14);--gold-text:#7C58C9;--radius:22px;
+  --ff-title:'Manrope',system-ui,sans-serif;--ff:'Manrope',system-ui,sans-serif;
+  --pattern:radial-gradient(900px 600px at 0% 0%,#FFD6E7,transparent 60%),radial-gradient(800px 600px at 100% 0%,#EADCFF,transparent 55%),radial-gradient(900px 700px at 50% 110%,#FFE3D6,transparent 60%);--pattern-size:100% 100%;--pattern-attach:fixed;
+  --shadow:0 8px 30px rgba(232,85,138,.10)}
+[data-theme=atual] h1,[data-theme=atual] h2,[data-theme=atual] h3,[data-theme=atual] h4{font-weight:800;letter-spacing:-.5px}
+[data-theme=atual] .card,[data-theme=atual] .kpi,[data-theme=atual] .sidebar,[data-theme=atual] .hero,[data-theme=atual] .pop,[data-theme=atual] .modal{backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+[data-theme=atual] .modal,[data-theme=atual] .pop{background:rgba(255,255,255,.92)}
+[data-theme=atual] .btn-primary{background:linear-gradient(135deg,#E8558A,#B794F6)}
+/* tons escuros também para o tema surpresa */
+[data-theme=surpresa] .pri-baixa,[data-theme=surpresa] .pri-media,[data-theme=surpresa] .pri-alta{background:transparent}
+[data-theme=surpresa] .pri-baixa{color:#a9c2b3} [data-theme=surpresa] .pri-media{color:#e2c48f} [data-theme=surpresa] .pri-alta{color:#e0a6ad}
+[data-theme=surpresa] .nt-card{background:color-mix(in srgb,var(--nc,#fff) 10%,var(--card))}
+/* Seletor de temas */
+.th-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:10px}
+.th-card{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:8px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:6px;transition:.15s;color:var(--text)}
+.th-card:hover{border-color:var(--rose-2);transform:translateY(-1px)}
+.th-card.on{border-color:var(--rose);box-shadow:0 0 0 2px var(--rose)}
+.th-prev{height:54px;border-radius:10px;display:flex;align-items:flex-end;gap:4px;padding:6px;position:relative;overflow:hidden}
+.th-prev i{width:16px;height:16px;border-radius:50%;box-shadow:0 0 0 2px rgba(255,255,255,.7)}
+.th-prev em{position:absolute;top:6px;left:8px;font-style:normal;font-size:17px;font-weight:600}
+.th-card b{font-size:13px;color:var(--heading);font-weight:600}
+.th-card small{font-size:11px;color:var(--muted);line-height:1.3}
 
 /* ---------- Responsivo ---------- */
 @media (max-width:1280px){ .kpis{grid-template-columns:repeat(4,minmax(0,1fr))} .yg{grid-template-columns:repeat(3,minmax(0,1fr))} }
@@ -1596,7 +1687,7 @@ function refreshChrome(){
   if(Pop.open==='popNotif')$('#popNotif').innerHTML=notifPanel();
 }
 function render(){
-  document.documentElement.dataset.theme=S.settings.theme==='dark'?'dark':'light';
+  applyTheme();
   $('#app').classList.toggle('collapsed',!!S.settings.sidebarCollapsed);
   renderSidebar();
   const v=$('#view');
@@ -3035,6 +3126,27 @@ function downloadFile(name,content,type){const blob=content instanceof Blob?cont
 /* =====================================================================
    CONFIGURAÇÕES
    ===================================================================== */
+const THEMES=[
+  {id:'light',n:'Elegant Rose Gold',d:'O tema original, claro',c:['#F8F3EF','#A65F68','#C58B91','#D4AF75'],f:'Cormorant Garamond',fonts:''},
+  {id:'dark',n:'Rose Gold escuro',d:'Versão noturna do original',c:['#1D1817','#C27B85','#B07A80','#D4AF75'],f:'Cormorant Garamond',fonts:''},
+  {id:'kawaii',n:'Kawaii',d:'Fofo, bolinhas e cantos redondos',c:['#FFF4F8','#F0679B','#FF9EC4','#FFC76E'],f:'Baloo 2',fonts:'Baloo+2:wght@500;600;700&family=Quicksand:wght@400;500;600;700'},
+  {id:'menta',n:'Hortelã & rosa pastel',d:'Verde menta com rosa suave',c:['#F2FAF7','#E07A9D','#7CCBB0','#F2AFC4'],f:'Quicksand',fonts:'Quicksand:wght@500;600;700&family=Nunito:wght@400;600;700'},
+  {id:'elegante',n:'Elegante',d:'Rosa vinho e champanhe',c:['#FAF6F4','#8E3B5A','#B86E8B','#C9A96E'],f:'Playfair Display',fonts:'Playfair+Display:wght@500;600;700&family=Lato:wght@400;700'},
+  {id:'despojado',n:'Despojado',d:'Caderno pautado e letra à mão',c:['#FFF8F1','#E2607F','#F3A0B2','#F2A65A'],f:'Caveat',fonts:'Caveat:wght@500;600;700&family=Nunito:wght@400;600;700'},
+  {id:'moderno',n:'Moderno',d:'Limpo, plano e rosa vibrante',c:['#F6F6F9','#E23C7B','#FF8BB2','#1F1F2E'],f:'Poppins',fonts:'Poppins:wght@500;600;700'},
+  {id:'criativo',n:'Criativo',d:'Degradês rosa e pêssego',c:['#FFF6F7','#D6336C','#FF8FAB','#FFAE6B'],f:'Fredoka',fonts:'Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700'},
+  {id:'menininha',n:'Menininha',d:'Rosa bebê com corações',c:['#FFF1F6','#EC5F92','#F7A9C6','#FFE4EF'],f:'Dancing Script',fonts:'Dancing+Script:wght@600;700&family=Quicksand:wght@400;500;600;700'},
+  {id:'vintage',n:'Vintage',d:'Rosa antigo e papel envelhecido',c:['#F4ECE2','#A8606E','#CB959C','#B39064'],f:'Libre Baskerville',fonts:'Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:wght@400;500;600'},
+  {id:'surpresa',n:'Me surpreenda',d:'Noite rosa neon',c:['#1C0F1C','#FF5FA2','#C64F8B','#FFB86B'],f:'Comfortaa',fonts:'Comfortaa:wght@500;600;700&family=Nunito:wght@400;600;700'},
+  {id:'atual',n:'Atual',d:'Vidro fosco e degradê rosa-lilás',c:['#FDF0F5','#E8558A','#B794F6','#FFD6E7'],f:'Manrope',fonts:'Manrope:wght@400;500;600;700;800'}
+];
+function applyTheme(){
+  const t=THEMES.find(x=>x.id===S.settings.theme)||THEMES[0];
+  document.documentElement.dataset.theme=t.id;
+  if(t.fonts&&!document.getElementById('font-'+t.id)){const l=document.createElement('link');l.id='font-'+t.id;l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family='+t.fonts+'&display=swap';document.head.appendChild(l);}
+  const m=document.querySelector('meta[name=theme-color]');if(m)m.content=t.c[1];
+}
+AFTER.config=()=>{if(document.getElementById('font-all'))return;const l=document.createElement('link');l.id='font-all';l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?'+THEMES.filter(t=>t.fonts).map(t=>'family='+t.fonts).join('&')+'&display=swap';document.head.appendChild(l);};
 const sw=(ch,on,extra='')=>`<label class="switch"><input type="checkbox" data-ch="${ch}" ${on?'checked':''} ${extra}><span></span></label>`;
 VIEWS.config=()=>{
   const st=S.settings,N=st.notify;const n=nowTZ();
@@ -3054,7 +3166,7 @@ VIEWS.config=()=>{
         <div class="set-row"><div><b>Formato de data</b><small>Padrão brasileiro em todo o planner</small></div><span class="badge-gold">DD/MM/AAAA</span></div>
         <div class="set-row"><div><b>Primeiro dia da semana</b><small>Agenda, planejamento semanal e calendários</small></div><select data-ch="setWeekStart">${opts([['1','Segunda-feira'],['0','Domingo']],String(st.weekStart))}</select></div></section>
       <section class="card"><div class="card-h"><h3>${ic('eye',18)}Aparência e visualização</h3></div>
-        <div class="set-row"><div><b>Tema</b><small>Claro (Elegant Rose Gold) ou escuro</small></div><div class="seg"><button class="${st.theme!=='dark'?'on':''}" data-a="setTheme" data-v="light">${ic('sun',14)} Claro</button><button class="${st.theme==='dark'?'on':''}" data-a="setTheme" data-v="dark">${ic('moon',14)} Escuro</button></div></div>
+        <div style="padding:4px 0 12px;border-bottom:1px dashed var(--line)"><b style="font-weight:500;color:var(--heading)">Tema</b><br><small class="muted">Escolha o visual do planner — a mudança é imediata</small><div class="th-grid">${THEMES.map(t=>`<button class="th-card ${(st.theme||'light')===t.id?'on':''}" data-a="setTheme" data-v="${t.id}" aria-pressed="${(st.theme||'light')===t.id}"><span class="th-prev" style="background:${t.c[0]}"><em style="color:${t.c[1]};font-family:'${t.f}',serif">Aa</em>${t.c.slice(1).map(c=>`<i style="background:${c}"></i>`).join('')}</span><b>${t.n}</b><small>${t.d}</small></button>`).join('')}</div></div>
         <div class="set-row"><div><b>Visualização padrão da agenda</b></div><select data-ch="setPref" data-k="agendaView">${opts([['dia','Dia'],['semana','Semana'],['mes','Mês'],['ano','Ano']],st.agendaView)}</select></div>
         <div class="set-row"><div><b>Visualização padrão das tarefas</b></div><select data-ch="setPref" data-k="taskView">${opts([['lista','Lista'],['kanban','Kanban'],['calendario','Calendário'],['categoria','Por categoria'],['prioridade','Por prioridade'],['prazo','Por prazo']],st.taskView)}</select></div>
         <div class="set-row"><div><b>Início do dia na agenda</b><small>Horário exibido ao abrir as grades diária e semanal</small></div><select data-ch="setPref" data-k="dayStart">${opts(Array.from({length:13},(_,h)=>[String(h),pad(h)+':00']),String(st.dayStart))}</select></div>
@@ -3101,7 +3213,7 @@ CH.avatarUp=async el=>{
 A.avatarDel=async()=>{if(!(await confirmDlg('Remover a foto de perfil?',{ok:'Remover',danger:true})))return;commit(s=>{s.settings.avatar='';},{msg:'Foto removida'});renderTopbar();};
 CH.setTz=el=>{commit(s=>{s.settings.tz=el.value;},{msg:'Fuso horário atualizado'});};
 CH.setWeekStart=el=>commit(s=>{s.settings.weekStart=+el.value;},{msg:'Primeiro dia da semana atualizado'});
-A.setTheme=el=>commit(s=>{s.settings.theme=el.dataset.v;});
+A.setTheme=el=>{commit(s=>{s.settings.theme=el.dataset.v;});const t=THEMES.find(x=>x.id===el.dataset.v);if(t)toast('Tema “'+t.n+'” aplicado');};
 CH.setPref=el=>commit(s=>{s.settings[el.dataset.k]=el.dataset.k==='dayStart'?+el.value:el.value;if(el.dataset.k==='agendaView'){U.ag.view=el.value;U.ag.scrolled=false;}if(el.dataset.k==='taskView')U.tk.view=el.value;if(el.dataset.k==='dayStart')U.ag.scrolled=false;},{msg:'Preferência salva'});
 CH.setBool=el=>commit(s=>{s.settings[el.dataset.k]=el.checked;},{msg:'Preferência salva'});
 CH.setNotif=el=>commit(s=>{s.settings.notify[el.dataset.k]=el.checked;},{msg:'Notificações atualizadas'});
