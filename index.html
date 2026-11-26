@@ -438,6 +438,37 @@ input[type=checkbox],input[type=radio]{accent-color:var(--rose)}
 .view-agenda .cal-card,.view-mes .mini-cal,.view-ciclo .cy,.view-tarefas .cal-card{user-select:none;-webkit-user-select:none}
 @media (max-width:640px){.tk-sub{padding-left:8px}}
 
+/* ---------- Reuniões ---------- */
+.mt-list{padding:14px 18px}
+.mt-row{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;text-align:left;border:0;border-bottom:1px dashed var(--line);background:none;padding:12px 4px;cursor:pointer;color:var(--text);font:inherit;border-radius:10px;transition:background .15s}
+.mt-row:hover{background:var(--rose-soft)}
+.mt-row:last-child{border-bottom:0}
+.mt-d{display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:12px;background:color-mix(in srgb,var(--mc) 14%,var(--card));color:color-mix(in srgb,var(--mc) 75%,var(--heading));padding:6px 0;line-height:1.1;border-left:3px solid var(--mc)}
+.mt-d b{font-family:var(--ff-title);font-size:22px;font-weight:600;font-variant-numeric:tabular-nums}
+.mt-d small{font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.mt-d.big{width:64px;flex:none;padding:8px 0}.mt-d.big b{font-size:28px}
+.mt-m{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mt-m>b{color:var(--heading);font-weight:600}
+.mt-m small{color:var(--muted);font-size:12.5px}
+.mt-s{font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mt-p{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;color:var(--muted);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mt-rec{color:var(--gold-text);display:inline-flex;vertical-align:-1px}
+.mt-b{display:flex;flex-direction:column;align-items:flex-end;gap:5px}
+.mt-ok{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;color:var(--ok);background:color-mix(in srgb,var(--ok) 12%,var(--card));padding:1px 8px;border-radius:999px;white-space:nowrap}
+.mt-no{font-size:11px;color:var(--muted);border:1px dashed var(--line);padding:0 8px;border-radius:999px;white-space:nowrap}
+.mt-next{margin-bottom:18px}
+.mt-next-l{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:4px 12px}
+.mt-nd{display:flex;flex-direction:column;align-items:center;width:42px;flex:none;font-size:11px;text-transform:uppercase;color:var(--muted);line-height:1.1}
+.mt-nd b{font-family:var(--ff-title);font-size:20px;color:var(--rose)}
+.mt-nt{display:flex;flex-direction:column;min-width:0}.mt-nt b{color:var(--heading);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mt-nt small{color:var(--muted);font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mt-head{display:flex;gap:16px;align-items:flex-start;margin-bottom:8px}
+.mt-head h2{font-family:var(--ff-title);font-size:24px;color:var(--heading);line-height:1.2}
+.mt-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;align-items:center}
+.mt-sec{border-top:1px solid var(--line);padding:12px 0 4px}
+.mt-sec h4{display:flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-text);font-weight:600;margin-bottom:6px}
+.mt-txt{white-space:pre-wrap;line-height:1.55;color:var(--text);overflow-wrap:anywhere}
+@media (max-width:640px){.mt-row{grid-template-columns:46px minmax(0,1fr)}.mt-b{grid-column:2;flex-direction:row;justify-content:flex-start}.mt-list{padding:8px 10px}}
+
 /* ---------- Planejamento semanal / mensal ---------- */
 .wk-board{display:grid;grid-template-columns:repeat(7,minmax(170px,1fr));gap:10px;overflow-x:auto;padding-bottom:6px}
 .wk-day{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px;display:flex;flex-direction:column;gap:8px;min-height:260px;transition:background .15s,box-shadow .15s;min-width:0}
@@ -1545,7 +1576,7 @@ function searchAll(q){
   const n=norm(q).trim();if(n.length<2)return null;
   const qd=parseQDate(q);const has=(...xs)=>xs.some(x=>norm(x).includes(n));const R=[];
   if(qd)R.push({g:'Datas',ic:'calendar',t:`Abrir ${fmtD(qd)} na agenda`,s:cap(DIAS[wd(qd)]),a:'date',id:qd});
-  for(const e of S.events)if(has(e.title,e.desc,e.location,e.participants,e.notes,catLabel(e.categoryId,e.categoryOther))||(qd&&occDates(e,qd,qd).length))R.push({g:'Compromissos',ic:'calendar',t:e.title,s:`${fmtD(qd&&occDates(e,qd,qd).length?qd:e.date)}${e.start?' · '+e.start:''}${isRec(e)?' · '+recText(e).toLowerCase():''}`,a:'occ',id:e.id+'@'+(qd&&occDates(e,qd,qd).length?qd:e.date)});
+  for(const e of S.events)if(has(e.title,e.desc,e.location,e.participants,e.notes,catLabel(e.categoryId,e.categoryOther),mtgText(e))||(qd&&occDates(e,qd,qd).length))R.push({g:'Compromissos',ic:'calendar',t:e.title,s:`${fmtD(qd&&occDates(e,qd,qd).length?qd:e.date)}${e.start?' · '+e.start:''}${isRec(e)?' · '+recText(e).toLowerCase():''}`,a:'occ',id:e.id+'@'+(qd&&occDates(e,qd,qd).length?qd:e.date)});
   for(const t of S.tasks)if(has(t.title,t.desc,t.notes,t.assignee,TST[t.status],catLabel(t.categoryId,t.categoryOther),PRI[t.priority]?.l,(t.subtasks||[]).map(s=>s.title).join(' '))||(qd&&(t.due===qd||t.plannedDate===qd)))R.push({g:'Tarefas',ic:'tasks',t:t.title,s:`${TST[t.status]}${t.due?' · prazo '+fmtD(t.due):''}`,a:'task',id:t.id});
   for(const p of S.projects)if(has(p.name,p.desc,p.objective,p.owner,PST[p.status],catLabel(p.categoryId,p.categoryOther))||(qd&&p.due===qd))R.push({g:'Projetos',ic:'briefcase',t:p.name,s:`${PST[p.status]} · ${projStats(p).pct}%`,a:'project',id:p.id});
   for(const g of S.goals)if(has(g.name,g.desc,g.unit,GPER[g.period],catLabel(g.categoryId,g.categoryOther))||(qd&&g.due===qd))R.push({g:'Metas',ic:'target',t:g.name,s:`${GPER[g.period]||''} · ${goalPct(g)}%`,a:'goal',id:g.id});
@@ -1578,6 +1609,7 @@ function openRef(type,id){
     case'list':{U.ls.sel=id;go('listas');break;}
     case'reminder':{const r=byId(S.reminders,id);if(r)openReminderForm(r);break;}
     case'fin':{U.fn.ym=id.slice(id.lastIndexOf('@')+1);go('financas');const x=finByKey(id);if(x)openFinForm(x);break;}
+    case'mtg':{if(occByKey(id))openMeeting(id);else toast('Reunião não encontrada.','warn');break;}
     case'date':{U.ag.date=id;U.ag.view='dia';U.ag.scrolled=false;go('agenda');break;}
   }
 }
@@ -1663,7 +1695,7 @@ function syncStatusHTML(){
    ESTRUTURA — menu lateral, barra superior, roteamento, dashboard e agenda
    ===================================================================== */
 const ROUTES=[
-  ['dashboard','Início','home'],['agenda','Minha Agenda','calendar'],['tarefas','Tarefas','tasks'],
+  ['dashboard','Início','home'],['agenda','Minha Agenda','calendar'],['reunioes','Reuniões','users'],['tarefas','Tarefas','tasks'],
   ['semana','Planejamento Semanal','week'],['mes','Planejamento Mensal','month'],['projetos','Projetos','briefcase'],
   ['metas','Metas e Objetivos','target'],['financas','Controle Financeiro','wallet'],['notas','Anotações','note'],['listas','Listas e Pendências','bag'],['ciclo','Calendário Menstrual','drop'],
   ['relatorios','Relatórios','chart'],['config','Configurações','settings']
@@ -1677,7 +1709,8 @@ const U={
   gl:{period:'',status:'andamento',q:''},
   nt:{q:'',cat:'',fav:false},
   ls:{sel:null,showDone:true},
-  rp:{period:'mes',date:'',cat:'',proj:'',status:''}
+  rp:{period:'mes',date:'',cat:'',proj:'',status:''},
+  mt:{q:'',period:'todos',from:'',to:''}
 };
 
 function renderSidebar(){
@@ -1695,6 +1728,7 @@ function renderTopbar(){
     <div class="pop-anchor"><button class="btn btn-primary tb-new" data-a="quickMenu" aria-haspopup="menu" title="Cadastro rápido">${ic('plus',17)}<span>Novo</span></button>
       <div class="pop pop-menu" id="popQuick" role="menu">
         <button data-a="quick" data-k="event" role="menuitem">${ic('calendar',17)}Novo compromisso</button>
+        <button data-a="quick" data-k="meeting" role="menuitem">${ic('users',17)}Nova reunião</button>
         <button data-a="quick" data-k="task" role="menuitem">${ic('tasks',17)}Nova tarefa</button>
         <button data-a="quick" data-k="note" role="menuitem">${ic('note',17)}Nova anotação</button>
         <button data-a="quick" data-k="project" role="menuitem">${ic('briefcase',17)}Novo projeto</button>
@@ -1745,9 +1779,9 @@ A.sidebarToggle=()=>commit(s=>{s.settings.sidebarCollapsed=!s.settings.sidebarCo
 A.drawerToggle=()=>$('#app').classList.toggle('drawer');
 A.drawerClose=()=>$('#app').classList.remove('drawer');
 A.quickMenu=()=>Pop.toggle('popQuick');
-A.quickMenuFab=()=>{Pop.close();choiceDlg('O que você deseja cadastrar?',[{v:'event',l:'Novo compromisso'},{v:'task',l:'Nova tarefa'},{v:'note',l:'Nova anotação'},{v:'project',l:'Novo projeto'},{v:'goal',l:'Nova meta'},{v:'reminder',l:'Novo lembrete'}],'Cadastro rápido').then(k=>k&&quickNew(k));};
+A.quickMenuFab=()=>{Pop.close();choiceDlg('O que você deseja cadastrar?',[{v:'event',l:'Novo compromisso'},{v:'meeting',l:'Nova reunião'},{v:'task',l:'Nova tarefa'},{v:'note',l:'Nova anotação'},{v:'project',l:'Novo projeto'},{v:'goal',l:'Nova meta'},{v:'reminder',l:'Novo lembrete'}],'Cadastro rápido').then(k=>k&&quickNew(k));};
 A.quick=el=>{Pop.close();quickNew(el.dataset.k);};
-function quickNew(k){({event:()=>openEventForm(null,null,{}),task:()=>openTaskForm(),note:()=>openNoteForm(),project:()=>openProjectForm(),goal:()=>openGoalForm(),reminder:()=>openReminderForm()})[k]();}
+function quickNew(k){({event:()=>openEventForm(null,null,{}),meeting:()=>openEventForm(null,null,{meeting:true}),task:()=>openTaskForm(),note:()=>openNoteForm(),project:()=>openProjectForm(),goal:()=>openGoalForm(),reminder:()=>openReminderForm()})[k]();}
 
 /* ---------- Gráficos simples ---------- */
 function ring(p,size=96,label='',color='var(--rose)'){
@@ -2049,14 +2083,14 @@ async function moveOcc(key,nd,ns){
   if(o.rec){mode=await choiceDlg(`“${esc(ev.title)}” se repete. O que deseja mover para ${fmtD(nd)}${newStart?' às '+newStart:''}?`,[{v:'one',l:'Somente esta ocorrência',cls:'btn-primary'},{v:'all',l:'Toda a série'}],'Compromisso recorrente');if(!mode){render();return;}}
   const delta=diffDays(o.date,nd);
   let draft;
-  if(mode==='one')draft={...clone(ev),id:uid(),date:nd,start:newStart,end:newEnd,recurrence:{type:'none'},done:o.done,doneDates:[],skip:[]};
+  if(mode==='one'){draft={...clone(ev),id:uid(),date:nd,start:newStart,end:newEnd,recurrence:{type:'none'},done:o.done,doneDates:[],skip:[],mtgOcc:{}};const mr=(ev.mtgOcc||{})[o.date];draft.mtg=mr?clone(mr):{};}
   else if(mode==='all'){draft={...clone(ev),date:addDays(ev.date,delta),start:newStart,end:newStart?newEnd:ev.end};if(draft.recurrence&&draft.recurrence.weekdays&&draft.recurrence.weekdays.length)draft.recurrence.weekdays=draft.recurrence.weekdays.map(w=>((+w+delta)%7+7)%7);if(draft.recurrence&&draft.recurrence.until)draft.recurrence.until=addDays(draft.recurrence.until,delta);}
   else draft={...clone(ev),date:nd,start:newStart,end:newEnd};
   const cf=conflicts(draft,x=>x.key===key||x.ev.id===ev.id);
   if(cf.length&&!(await confirmDlg(conflictMsg(cf),{ok:'Mover mesmo assim',title:'Conflito de horário'}))){render();return;}
   commit(s=>{
     if(mode==='one'){ev.skip=[...(ev.skip||[]),o.date];ev.doneDates=(ev.doneDates||[]).filter(x=>x!==o.date);s.events.push(draft);}
-    else Object.assign(ev,{date:draft.date,start:draft.start,end:draft.end,recurrence:draft.recurrence});
+    else{if(mode==='all'&&delta&&ev.mtgOcc){const m={};for(const [k,v] of Object.entries(ev.mtgOcc))m[addDays(k,delta)]=v;ev.mtgOcc=m;}if(mode==='all'&&delta&&ev.doneDates)ev.doneDates=ev.doneDates.map(x=>addDays(x,delta));Object.assign(ev,{date:draft.date,start:draft.start,end:draft.end,recurrence:draft.recurrence});}
   },{msg:`Compromisso reagendado para ${fmtD(nd)}${newStart?' às '+newStart:''}`});
 }
 async function deleteOcc(key){
@@ -2066,7 +2100,7 @@ async function deleteOcc(key){
     if(!ch)return false;
     if(ch==='one'){commit(()=>{o.ev.skip=[...(o.ev.skip||[]),o.date];},{msg:'Ocorrência excluída'});return true;}
     if(!(await confirmDlg('Todas as ocorrências desta série serão excluídas. Esta ação não pode ser desfeita.',{ok:'Excluir série',danger:true})))return false;
-  }else if(!(await confirmDlg(`Excluir o compromisso “${esc(o.ev.title)}”? Esta ação não pode ser desfeita.`,{ok:'Excluir',danger:true,title:'Excluir compromisso'})))return false;
+  }else if(!(await confirmDlg(`Excluir o compromisso “${esc(o.ev.title)}”?${o.ev.isMeeting?' O registro da reunião também será excluído.':''} Esta ação não pode ser desfeita.`,{ok:'Excluir',danger:true,title:'Excluir compromisso'})))return false;
   commit(s=>{s.events=s.events.filter(e=>e.id!==o.ev.id);},{msg:'Compromisso excluído'});
   return true;
 }
@@ -2091,11 +2125,12 @@ CH.recType=el=>{const f=el.form;$('#recBox',f).innerHTML=recBox({type:el.value,u
 CH.recUnit=el=>{const f=el.form;$('#recBox',f).innerHTML=recBox({type:'custom',unit:el.value,interval:f.recInterval.value,weekdays:[wd(f.date.value||today())],until:f.recUntil?f.recUntil.value:''},f.date.value);};
 CH.remCustomToggle=el=>{const i=el.form.querySelector('.rem-custom');i.disabled=!el.checked;if(el.checked)i.focus();};
 CH.catSel=el=>{const o=el.form.elements.categoryOther;if(!o)return;const on=isOutros(el.value);o.hidden=!on;if(on)o.focus();};
+CH.mtgSel=el=>{const on=el.value==='sim';const f=el.form;$('#mtgSubj',f).style.display=on?'':'none';$('.mtg-hint',f).style.display=on?'':'none';if(on)f.mtgSubject.focus();};
 CH.evCatColor=el=>{CH.catSel(el);const f=el.form;if(f.useCatColor.checked)f.color.value=catOf(el.value).color||'#A65F68';};
 function openEventForm(ev=null,occDate=null,def={}){
   const isNew=!ev;
   const e=ev?clone(ev):{id:uid(),title:'',desc:'',date:def.date||today(),start:def.start||'',end:'',location:'',participants:'',categoryId:def.categoryId||'',priority:'media',color:'',notes:'',
-    reminders:(S.settings.notify.eventDefault!==''&&+S.settings.notify.eventDefault>=0)?[+S.settings.notify.eventDefault]:[],recurrence:{type:'none'},important:false,createdAt:stamp()};
+    isMeeting:!!def.meeting,mtgSubject:'',reminders:(S.settings.notify.eventDefault!==''&&+S.settings.notify.eventDefault>=0)?[+S.settings.notify.eventDefault]:[],recurrence:{type:'none'},important:false,createdAt:stamp()};
   if(isNew&&e.start&&!e.end)e.end=fromMin(Math.min(toMin(e.start)+60,1439));
   const rec=isRec(e);const od=occDate||e.date;const key=e.id+'@'+od;
   const o=!isNew?occByKey(key):null;
@@ -2103,6 +2138,9 @@ function openEventForm(ev=null,occDate=null,def={}){
   const body=`
     ${rec&&!isNew?`<p class="hint" style="background:var(--gold-soft);padding:8px 12px;border-radius:10px">${ic('repeat',13)} Compromisso recorrente (${esc(recText(e))}). As alterações abaixo valem para toda a série. Ocorrência selecionada: <b>${fmtD(od)}</b>.</p>`:''}
     ${F.text('title','Título',e.title,{req:true,attr:'autofocus maxlength="160"',ph:'Ex.: Reunião com a equipe'})}
+    <div class="grid2 mtg-q">${F.sel('isMeeting','É uma reunião?',[['nao','Não'],['sim','Sim']],e.isMeeting?'sim':'nao',{attr:'data-ch="mtgSel"'})}
+      <label class="fld" id="mtgSubj" style="${e.isMeeting?'':'display:none'}"><span>Assunto / pauta</span><input type="text" name="mtgSubject" maxlength="200" value="${esc(e.mtgSubject||'')}" placeholder="Ex.: Indicadores do mês"></label></div>
+    <p class="hint mtg-hint" style="margin-top:-8px;${e.isMeeting?'':'display:none'}">${ic('users',13)} Esta atividade aparecerá na aba <b>Reuniões</b>, onde você poderá registrar a ata, as decisões e os encaminhamentos.</p>
     <div class="grid3">${F.text('date','Data',e.date,{type:'date',req:true})}${F.text('start','Horário inicial',e.start,{type:'time'})}${F.text('end','Horário final',e.end,{type:'time'})}</div>
     <p class="hint" style="margin-top:-8px">Deixe o horário em branco para um compromisso de dia inteiro.</p>
     <div class="grid2">${F.text('location','Local',e.location,{ph:'Ex.: Sala de reuniões'})}${F.text('participants','Participantes',e.participants,{ph:'Nomes separados por vírgula'})}</div>
@@ -2121,6 +2159,7 @@ function openEventForm(ev=null,occDate=null,def={}){
     ${F.check('important','Marcar como data importante (destaque na visão anual)',e.important)}
     ${!isNew?`<p class="meta-line">${e.createdAt?`<span>Criado em ${fmtStamp(e.createdAt)}</span>`:''}${o&&o.done?'<span class="badge-gold">Realizado</span>':''}</p>`:''}`;
   const left=isNew?[]:[
+    ...(e.isMeeting?[{l:'Registro da reunião',icon:'users',cls:'btn-gold',fn:()=>openMeeting(key)}]:[]),
     {l:'Excluir',icon:'trash',cls:'btn-danger-ghost',fn:async()=>{if(await deleteOcc(key))Modal.close(true);}},
     {l:'Duplicar',icon:'copy',fn:()=>{Modal.close(true);const c=clone(ev);c.id=uid();c.title=c.title+' (cópia)';c.done=false;c.doneDates=[];c.skip=[];c.createdAt=stamp();commit(s=>s.events.push(c),{msg:'Compromisso duplicado'});openEventForm(c,c.date);}},
     {l:'Reagendar',icon:'clock',fn:()=>{Modal.close(true);rescheduleDlg(key);}},
@@ -2144,7 +2183,7 @@ function openEventForm(ev=null,occDate=null,def={}){
         if((r.type==='weekly'||r.type==='biweekly'||(r.type==='custom'&&r.unit==='week'))&&!(r.weekdays&&r.weekdays.length))return toast('Selecione ao menos um dia da semana para a repetição.','error'),false;
       }
       const out={...e,title:d.title,desc:d.desc,date:d.date,start:d.start,end:d.start?(d.end||fromMin(Math.min(toMin(d.start)+60,1439))):'',location:d.location,participants:d.participants,categoryId:d.categoryId,categoryOther:isOutros(d.categoryId)?d.categoryOther:'',priority:d.priority,
-        color:d.useCatColor?'':d.color,notes:d.notes,reminders:[...new Set(reminders)].sort((a,b)=>a-b),recurrence:r,important:!!d.important,updatedAt:stamp()};
+        color:d.useCatColor?'':d.color,notes:d.notes,reminders:[...new Set(reminders)].sort((a,b)=>a-b),recurrence:r,important:!!d.important,isMeeting:d.isMeeting==='sim',mtgSubject:d.isMeeting==='sim'?d.mtgSubject:(e.mtgSubject||''),updatedAt:stamp()};
       if(isNew&&S.events.some(x=>norm(x.title)===norm(out.title)&&x.date===out.date&&(x.start||'')===(out.start||''))){
         if(!(await confirmDlg(`Já existe um compromisso “${esc(out.title)}” em ${fmtD(out.date)}${out.start?' às '+out.start:''}. Deseja cadastrar mesmo assim?`,{ok:'Cadastrar mesmo assim',title:'Possível duplicidade'})))return false;
       }
@@ -2697,6 +2736,106 @@ function openGoalForm(g=null,def={}){
       const out={...x,name:d.name,desc:d.desc,period:d.period,categoryId:d.categoryId,categoryOther:isOutros(d.categoryId)?d.categoryOther:'',unit:d.unit,start:d.start,due:d.due,initial:+(d.initial||0),target:+d.target,current:cur,updatedAt:stamp()};
       if(isNew||+x.current!==cur)(out.history||(out.history=[])).push({at:stamp(),value:cur,note:isNew?'Valor inicial registrado':'Ajuste manual'});
       commit(s=>{if(isNew)s.goals.push(out);else{const i=s.goals.findIndex(y=>y.id===out.id);if(i>=0)s.goals[i]=out;}},{msg:isNew?'Meta cadastrada':'Meta atualizada'});
+    }});
+}
+
+/* =====================================================================
+   REUNIÕES — atividades da agenda marcadas como reunião
+   ===================================================================== */
+const mtgRec=(ev,d)=>(isRec(ev)?(ev.mtgOcc||{})[d]:ev.mtg)||{};
+const mtgHas=r=>!!(r.minutes||r.decisions||r.actions);
+const mtgSubj=(ev,r)=>r.subject||ev.mtgSubject||'';
+const mtgPeople=(ev,r)=>r.attendees!=null&&r.attendees!==''?r.attendees:(ev.participants||'');
+function mtgText(e){if(!e.isMeeting)return '';const R=[e.mtg||{},...Object.values(e.mtgOcc||{})];return [e.mtgSubject,...R.map(r=>[r.subject,r.attendees,r.minutes,r.decisions,r.actions].join(' '))].join(' ');}
+function mtgFirst(){let m='';for(const e of S.events)if(e.isMeeting&&(!m||e.date<m))m=e.date;return m;}
+function mtgRange(){
+  const M=U.mt,t=today();
+  switch(M.period){
+    case'mes':return [t.slice(0,8)+'01',t];
+    case'30':return [addDays(t,-30),t];
+    case'90':return [addDays(t,-90),t];
+    case'ano':return [t.slice(0,4)+'-01-01',t];
+    case'custom':return [isDate(M.from)?M.from:(mtgFirst()||t),isDate(M.to)?M.to:t];
+    default:return [mtgFirst()||t,t];
+  }
+}
+VIEWS.reunioes=()=>{
+  const M=U.mt,t=today();const q=norm(M.q).trim();
+  const total=S.events.filter(e=>e.isMeeting).length;
+  const [a,b]=mtgRange();
+  const L=(a&&a<=b?occList(a,b,e=>e.isMeeting):[]).filter(o=>{
+    if(!q)return true;const r=mtgRec(o.ev,o.date);
+    return norm([o.ev.title,mtgSubj(o.ev,r),o.ev.participants,r.attendees,o.ev.location,r.minutes,r.decisions,r.actions].join(' ')).includes(q);
+  }).reverse();
+  const next=occList(addDays(t,1),addDays(t,60),e=>e.isMeeting).slice(0,5);
+  const todayL=occList(t,t,e=>e.isMeeting);
+  const comReg=L.filter(o=>mtgHas(mtgRec(o.ev,o.date))).length;
+  const PER=[['todos','Todas'],['mes','Este mês'],['30','Últimos 30 dias'],['90','Últimos 90 dias'],['ano','Este ano'],['custom','Personalizado']];
+  let mh='';
+  const rows=L.map(o=>{const k=o.date.slice(0,7);const head=k!==mh?`<div class="hist-day">${cap(MESES[+k.slice(5)-1])} de ${k.slice(0,4)}</div>`:'';mh=k;return head+mtgRow(o);}).join('');
+  return `<div class="page-h"><div><div class="eyebrow">Registro</div><h1>Reuniões</h1><p class="sub">${total?`${plural(L.length,'reunião','reuniões')} no período · ${plural(comReg,'com registro','com registro')}`:'Histórico das atividades marcadas como reunião'}</p></div>
+    <div class="ph-actions"><button class="btn btn-primary" data-a="mtNew">${ic('plus',16)}Nova reunião</button></div></div>
+  ${next.length?`<section class="card mt-next"><div class="card-h"><h3>${ic('clock',18)}Próximas reuniões</h3></div><div class="mt-next-l">${next.map(o=>`<button class="dl" data-a="mtOpen" data-k="${o.key}"><span class="mt-nd"><b>${o.date.slice(8)}</b>${MESES_C[+o.date.slice(5,7)-1]}</span><span class="mt-nt"><b>${esc(o.ev.title)}</b><small>${cap(DIAS[wd(o.date)])}${o.start?' · '+o.start:''}${mtgSubj(o.ev,mtgRec(o.ev,o.date))?' · '+esc(mtgSubj(o.ev,mtgRec(o.ev,o.date))):''}</small></span></button>`).join('')}</div></section>`:''}
+  <div class="toolbar"><div class="search-in">${ic('search',16)}<input type="search" id="mtQ" placeholder="Pesquisar por título, assunto ou participantes…" value="${esc(M.q)}" data-in="mtQ" aria-label="Pesquisar reuniões"></div>
+    <div class="seg" role="group" aria-label="Período">${PER.map(([k,l])=>`<button class="${M.period===k?'on':''}" data-a="mtPer" data-p="${k}">${l}</button>`).join('')}</div>
+    ${M.period==='custom'?`<span class="inline"><input type="date" value="${esc(M.from)}" data-ch="mtFrom" aria-label="De"><small class="hint">até</small><input type="date" value="${esc(M.to)}" data-ch="mtTo" aria-label="Até"></span>`:''}</div>
+  ${L.length?`<section class="card mt-list">${rows}</section>`:`<div class="card empty">${ic('users',30)}<b>${total?'Nenhuma reunião encontrada':'Nenhuma reunião ainda'}</b>${total?(todayL.length&&!q?'As reuniões de hoje e anteriores aparecem aqui; ajuste o período se necessário.':'Ajuste a pesquisa ou o período.'):'Ao cadastrar ou editar um compromisso, escolha <b>“É uma reunião?” → Sim</b>. Ele aparecerá aqui automaticamente.'}</div>`}`;
+};
+function mtgRow(o){
+  const r=mtgRec(o.ev,o.date);const s=mtgSubj(o.ev,r);const p=mtgPeople(o.ev,r);
+  return `<button class="mt-row" data-a="mtOpen" data-k="${o.key}" style="--mc:${o.color||'var(--rose)'}">
+    <span class="mt-d"><b>${o.date.slice(8)}</b><small>${DIAS_C[wd(o.date)]}</small></span>
+    <span class="mt-m"><b>${esc(o.ev.title)}${o.rec?` <span class="mt-rec" title="${esc(recText(o.ev))}">${ic('repeat',12)}</span>`:''}</b>
+      <small>${fmtD(o.date)}${o.start?' · '+o.start+(o.end?'–'+o.end:''):''}${o.ev.location?' · '+esc(o.ev.location):''}</small>
+      ${s?`<span class="mt-s">${esc(s)}</span>`:''}
+      ${p?`<span class="mt-p">${ic('users',12)}${esc(p)}</span>`:''}</span>
+    <span class="mt-b">${o.done?'<span class="badge-gold">Realizada</span>':''}${mtgHas(r)?`<span class="mt-ok">${ic('note',12)}Com registro</span>`:'<span class="mt-no">Sem registro</span>'}</span></button>`;
+}
+IN.mtQ=el=>{U.mt.q=el.value;render();};
+A.mtPer=el=>{U.mt.period=el.dataset.p;if(el.dataset.p==='custom'&&!U.mt.from){U.mt.from=addDays(today(),-90);U.mt.to=today();}render();};
+CH.mtFrom=el=>{U.mt.from=el.value;render();};
+CH.mtTo=el=>{U.mt.to=el.value;render();};
+A.mtNew=()=>openEventForm(null,null,{meeting:true});
+A.mtOpen=el=>openMeeting(el.dataset.k);
+const mtBlock=(icn,label,txt,empty)=>`<div class="mt-sec"><h4>${ic(icn,15)}${label}</h4>${txt?`<div class="mt-txt">${esc(txt)}</div>`:`<p class="muted small">${empty}</p>`}</div>`;
+function openMeeting(key){
+  const o=occByKey(key);if(!o){toast('Reunião não encontrada.','warn');return;}
+  const ev=o.ev,r=mtgRec(ev,o.date);
+  const body=`<div class="mt-head"><div class="mt-d big" style="--mc:${o.color||'var(--rose)'}"><b>${o.date.slice(8)}</b><small>${MESES_C[+o.date.slice(5,7)-1]}</small></div>
+      <div><h2>${esc(ev.title)}</h2><p class="muted">${cap(DIAS[wd(o.date)])}, ${fmtLong(o.date)}${o.start?' · '+o.start+(o.end?'–'+o.end:''):' · dia inteiro'}</p>
+      <p class="mt-tags">${ev.categoryId?catChip(ev.categoryId,ev.categoryOther):''}${ev.location?`<span class="mt-p">${ic('pin',12)}${esc(ev.location)}</span>`:''}${o.rec?`<span class="mt-p">${ic('repeat',12)}${esc(recText(ev))}</span>`:''}${o.done?'<span class="badge-gold">Realizada</span>':''}</p></div></div>
+    ${mtBlock('flag','Assunto / pauta',mtgSubj(ev,r),'Não informado.')}
+    ${mtBlock('users','Participantes',mtgPeople(ev,r),'Não informados.')}
+    ${mtBlock('note','Registro / ata',r.minutes,'Nenhum registro ainda. Clique em “Editar registro” para complementar.')}
+    ${mtBlock('check','Decisões',r.decisions,'Nenhuma decisão registrada.')}
+    ${mtBlock('arrowR','Encaminhamentos',r.actions,'Nenhum encaminhamento registrado.')}
+    ${ev.desc?mtBlock('feather','Descrição da atividade',ev.desc,''):''}
+    <p class="meta-line">${r.updatedAt?`<span>Registro atualizado em ${fmtStamp(r.updatedAt)}</span>`:''}<span>Vinculada ao compromisso da agenda</span></p>`;
+  const el=Modal.open({title:'Reunião',size:'lg',body,
+    foot:`<div class="mf-left"><button type="button" class="btn btn-ghost btn-sm" data-x="ev">${ic('calendar',15)}Abrir compromisso</button></div><div class="mf-right"><button type="button" class="btn btn-ghost" data-x="close">Fechar</button><button type="button" class="btn btn-primary" data-x="edit">${ic('edit',15)}Editar registro</button></div>`});
+  $('[data-x="close"]',el).onclick=()=>Modal.close();
+  $('[data-x="edit"]',el).onclick=()=>{Modal.close();editMeeting(key);};
+  $('[data-x="ev"]',el).onclick=()=>{Modal.close();while(Modal.top())Modal.close();openEventForm(ev,o.date);};
+}
+function editMeeting(key){
+  const o=occByKey(key);if(!o)return;const ev=o.ev,r=mtgRec(ev,o.date);
+  const body=`<p class="hint" style="background:var(--gold-soft);padding:8px 12px;border-radius:10px">${ic('calendar',13)} <b>${esc(ev.title)}</b> · ${fmtD(o.date)}${o.start?' às '+o.start:''}${o.rec?' · registro só desta ocorrência':''}</p>
+    ${F.text('subject','Assunto / pauta',mtgSubj(ev,r),{attr:'maxlength="200"'})}
+    ${F.text('attendees','Participantes',mtgPeople(ev,r),{ph:'Nomes separados por vírgula'})}
+    ${F.area('minutes','Registro / ata',r.minutes||'',{rows:7,ph:'O que foi discutido…'})}
+    <div class="grid2">${F.area('decisions','Decisões',r.decisions||'',{rows:4})}${F.area('actions','Encaminhamentos',r.actions||'',{rows:4,ph:'Responsável, ação e prazo…'})}</div>
+    ${F.check('done','Reunião realizada',o.done)}`;
+  formModal({title:'Registro da reunião',size:'lg',body,saveLabel:'Salvar registro',
+    onSave:f=>{
+      const d=formData(f);
+      commit(s=>{
+        const e=byId(s.events,ev.id);if(!e)return;
+        const rec={...mtgRec(e,o.date),subject:d.subject,attendees:d.attendees,minutes:d.minutes,decisions:d.decisions,actions:d.actions,updatedAt:stamp()};
+        if(!rec.createdAt)rec.createdAt=stamp();
+        if(isRec(e)){e.mtgOcc={...(e.mtgOcc||{}),[o.date]:rec};const ds=new Set(e.doneDates||[]);d.done?ds.add(o.date):ds.delete(o.date);e.doneDates=[...ds];}
+        else{e.mtg=rec;e.done=!!d.done;}
+      },{msg:'Registro da reunião salvo'});
+      setTimeout(()=>openMeeting(key),220);
     }});
 }
 
